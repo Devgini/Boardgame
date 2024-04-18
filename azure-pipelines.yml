@@ -33,12 +33,18 @@ steps:
     sonarQubeRunAnalysis: false
   
 - task: Docker@2
-  displayName: Docker 
+  displayName: Docker Build
   inputs:
     containerRegistry: 'docker-conn'
     repository: 'brd'
-    command: 'buildAndPush'
+    command: 'build'
     Dockerfile: '**/Dockerfile'
 
+- task: Docker@2
+  displayName: Docker Push
+  inputs:
+    containerRegistry: 'docker-conn'
+    repository: 'brd'
+    command: 'push'
 
   
