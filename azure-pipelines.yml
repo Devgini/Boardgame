@@ -8,7 +8,6 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-steps:
 - task: Maven@4
   displayName: Compile
   inputs:
@@ -21,7 +20,6 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
-steps:
 - task: Maven@4
   displayName: Build
   inputs:
@@ -34,7 +32,6 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
   
-steps:
 - task: Docker@2
   displayName: Docker 
   inputs:
