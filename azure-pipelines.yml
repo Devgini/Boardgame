@@ -1,0 +1,47 @@
+trigger:
+- main
+
+pool:
+  name: devpool
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+steps:
+- task: Maven@4
+  displayName: Compile
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: false
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+
+steps:
+- task: Maven@4
+  displayName: Build
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+  
+steps:
+- task: Docker@2
+  displayName: Docker 
+  inputs:
+    containerRegistry: 'docker-conn'
+    repository: 'brd'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+
+
+  
